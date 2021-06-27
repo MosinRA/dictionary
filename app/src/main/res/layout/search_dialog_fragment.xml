@@ -2,27 +2,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet_dialog_layout"
     android:layout_width="match_parent"
-    android:layout_height="205dp"
-    android:layout_marginBottom="15dp"
+    android:layout_height="150dp"
+    android:layout_marginBottom="@dimen/margin_medium"
+    android:background="@color/color_medium_gray"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/search_button_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="@string/button_search" />
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:backgroundTint="@color/color_gray"
+        android:text="@string/button_search"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="15dp">
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_big">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/search_input_layout"
@@ -41,7 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:layout_marginTop="10dp"
             android:contentDescription="@string/delete_description"
             android:src="@drawable/ic_delete_text"
             android:visibility="visible"
