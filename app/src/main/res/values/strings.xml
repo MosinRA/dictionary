@@ -7,4 +7,12 @@
     <string name="button_search">Найти</string>
     <string name="search_hint">Найти новое слово</string>
     <string name="delete_description">X</string>
+    <string name="image_stub">Картинка</string>
+    <string name="dialog_button_cancel">Отмена</string>
+    <string name="dialog_title_stub">Неопределенная ошибка</string>
+    <string name="dialog_title_device_is_offline">Отсутствует интернет</string>
+    <string name="dialog_message_device_is_offline">Приложение не работает без подключения к сети
+        пожалуйста включите интернет</string>
+    <string name="dialog_tittle_sorry">Извините</string>
+    <string name="error_stub">Ошибка</string>
 </resources>
