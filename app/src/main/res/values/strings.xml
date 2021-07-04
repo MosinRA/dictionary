@@ -15,4 +15,5 @@
         пожалуйста включите интернет</string>
     <string name="dialog_tittle_sorry">Извините</string>
     <string name="error_stub">Ошибка</string>
+    <string name="dialog_title_sorry">Ошибка</string>
 </resources>
