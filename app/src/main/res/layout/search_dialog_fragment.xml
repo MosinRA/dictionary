@@ -1,32 +1,31 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet_dialog_layout"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:layout_marginBottom="@dimen/margin_medium"
-    android:background="@color/color_medium_gray"
+    android:layout_height="205dp"
+    android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:layout_marginBottom="@dimen/margin_medium"
+    android:background="@color/color_gray">
 
-    <com.google.android.material.button.MaterialButton
+    <TextView
         android:id="@+id/search_button_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        style="@style/TextViewButtonStyle"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:backgroundTint="@color/color_gray"
         android:text="@string/button_search"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:layout_gravity="end"/>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_xxx_medium"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:layout_marginBottom="@dimen/margin_big">
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/search_input_layout"
@@ -37,7 +36,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                style="@style/BaseEditTextStyle"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
@@ -45,9 +45,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:contentDescription="@string/delete_description"
+            android:layout_marginTop="@dimen/margin_small"
             android:src="@drawable/ic_delete_text"
             android:visibility="visible"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            android:contentDescription="@string/delete_description"/>
     </FrameLayout>
+
+
+    <!--<com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            style="@style/BaseFlatButton"
+            android:layout_height="wrap_content"
+            android:text="@string/button_search"
+            app:cornerRadius="16dp"
+            android:layout_gravity="end"/>-->
 </LinearLayout>
