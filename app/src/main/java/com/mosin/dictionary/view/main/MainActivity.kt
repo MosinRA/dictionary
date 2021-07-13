@@ -13,10 +13,11 @@ import com.mosin.dictionary.utils.convertMeaningsToString
 import com.mosin.dictionary.utils.network.isOnline
 import com.mosin.dictionary.view.base.BaseActivity
 import com.mosin.dictionary.view.descriptionscreen.DescriptionActivity
-import com.mosin.dictionary.view.history.HistoryActivity
 import com.mosin.dictionary.view.main.adapter.MainAdapter
+import com.mosin.history.view.history.HistoryActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
+
 
 
 private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG = "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
@@ -39,7 +40,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
                         this@MainActivity,
                         data.text!!,
                         convertMeaningsToString(data.meanings!!),
-                        data.meanings[0].imageUrl
+                        data.meanings!![0].imageUrl
                     )
                 )
             }
@@ -83,9 +84,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     }
 
     private fun iniViewModel() {
-        if (main_activity_recyclerview.adapter != null) {
-            throw IllegalStateException("The ViewModel should be initialised first")
-        }
+        check(main_activity_recyclerview.adapter == null) { "The ViewModel should be initialised first" }
         val viewModel: MainViewModel by viewModel()
         model = viewModel
         model.subscribe().observe(this@MainActivity, Observer<AppState> { renderData(it) })
