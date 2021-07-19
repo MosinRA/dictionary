@@ -1,4 +1,4 @@
-package com.mosin.dictionary.view.descriptionscreen
+package com.mosin.historyscreenfeature
 
 import android.content.Context
 import android.content.Intent
@@ -8,27 +8,23 @@ import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.mosin.dictionary.R
-import com.mosin.dictionary.utils.network.isOnline
-import com.mosin.utils.ui.AlertDialogFragment
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_description.*
+import kotlinx.android.synthetic.main.activity_description_feature.*
 
 
-class DescriptionActivity : AppCompatActivity() {
+class DescriptionActivityFeature : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_description)
+        setContentView(R.layout.activity_description_feature)
 
         setActionbarHomeButtonAsUp()
-        description_screen_swipe_refresh_layout.setOnRefreshListener{ startLoadingOrShowError() }
+        description_screen_swipe_refresh_layout.setOnRefreshListener { startLoadingOrShowError() }
         setData()
     }
 
@@ -55,45 +51,18 @@ class DescriptionActivity : AppCompatActivity() {
         if (imageLink.isNullOrBlank()) {
             stopRefreshAnimationIfNeeded()
         } else {
-            //usePicassoToLoadPhoto(findViewById(R.id.description_imageview), imageLink)
             useGlideToLoadPhoto(findViewById(R.id.description_imageview), imageLink)
         }
     }
 
     private fun startLoadingOrShowError() {
-        if (isOnline(applicationContext)) {
-            setData()
-        } else {
-            AlertDialogFragment.newInstance(
-                getString(R.string.dialog_title_device_is_offline),
-                getString(R.string.dialog_message_device_is_offline)
-            ).show(
-                supportFragmentManager,
-                DIALOG_FRAGMENT_TAG
-            )
-            stopRefreshAnimationIfNeeded()
-        }
+        setData()
     }
 
     private fun stopRefreshAnimationIfNeeded() {
         if (description_screen_swipe_refresh_layout.isRefreshing) {
             description_screen_swipe_refresh_layout.isRefreshing = false
         }
-    }
-
-    private fun usePicassoToLoadPhoto(imageView: ImageView, imageLink: String) {
-        Picasso.with(applicationContext).load("https:$imageLink")
-            .placeholder(R.drawable.ic_no_photo_vector).fit().centerCrop()
-            .into(imageView, object : Callback {
-                override fun onSuccess() {
-                    stopRefreshAnimationIfNeeded()
-                }
-
-                override fun onError() {
-                    stopRefreshAnimationIfNeeded()
-                    imageView.setImageResource(R.drawable.ic_load_error_vector)
-                }
-            })
     }
 
     private fun useGlideToLoadPhoto(imageView: ImageView, imageLink: String) {
@@ -107,7 +76,7 @@ class DescriptionActivity : AppCompatActivity() {
                     isFirstResource: Boolean
                 ): Boolean {
                     stopRefreshAnimationIfNeeded()
-                    imageView.setImageResource(R.drawable.ic_load_error_vector)
+                    imageView.setImageResource(android.R.drawable.btn_default)
                     return false
                 }
 
@@ -115,7 +84,7 @@ class DescriptionActivity : AppCompatActivity() {
                     resource: Drawable?,
                     model: Any?,
                     target: Target<Drawable>?,
-                    dataSource: DataSource?,
+                    dataSource: com.bumptech.glide.load.DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
                     stopRefreshAnimationIfNeeded()
@@ -124,7 +93,7 @@ class DescriptionActivity : AppCompatActivity() {
             })
             .apply(
                 RequestOptions()
-                    .placeholder(R.drawable.ic_no_photo_vector)
+                    .placeholder(android.R.drawable.btn_default)
                     .centerCrop()
             )
             .into(imageView)

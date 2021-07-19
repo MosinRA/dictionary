@@ -8,7 +8,7 @@ import com.mosin.core.R
 import com.mosin.dictionary.model.data.AppState
 import com.mosin.dictionary.model.data.DataModel
 import com.mosin.dictionary.utils.network.isOnline
-import com.mosin.dictionary.utils.ui.AlertDialogFragment
+import com.mosin.utils.ui.AlertDialogFragment
 import com.mosin.dictionary.viewmodel.BaseViewModel
 import com.mosin.dictionary.viewmodel.Interactor
 
