@@ -1,15 +1,15 @@
 package com.mosin.dictionary.model.datasource
 
 import com.mosin.dictionary.model.data.AppState
-import com.mosin.dictionary.model.data.DataModel
 import com.mosin.dictionary.room.HistoryEntity
+import com.mosin.model.dto.SearchResultDto
 
 
-fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<DataModel> {
-    val searchResult = ArrayList<DataModel>()
+fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<SearchResultDto> {
+    val searchResult = ArrayList<SearchResultDto>()
     if (!list.isNullOrEmpty()) {
         for (entity in list) {
-            searchResult.add(DataModel(entity.word, null))
+            searchResult.add(SearchResultDto(entity.word, null))
         }
     }
     return searchResult
@@ -19,12 +19,13 @@ fun convertDataModelSuccessToEntity(appState: AppState): HistoryEntity? {
     return when (appState) {
         is AppState.Success -> {
             val searchResult = appState.data
-            if (searchResult.isNullOrEmpty() || searchResult[0].text.isNullOrEmpty()) {
+            if (searchResult.isNullOrEmpty() || searchResult[0].text.isBlank()) {
                 null
             } else {
-                HistoryEntity(searchResult[0].text!!, null)
+                HistoryEntity(searchResult[0].text, null)
             }
         }
         else -> null
     }
 }
+

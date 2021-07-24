@@ -1,4 +1,4 @@
-package com.mosin.dictionary.model.data.api
+package com.mosin.repository.api
 
 import okhttp3.Interceptor
 import okhttp3.Response

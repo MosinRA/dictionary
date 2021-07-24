@@ -1,18 +1,18 @@
 package com.mosin.dictionary.model.datasource
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.mosin.dictionary.model.data.DataModel
-import com.mosin.dictionary.model.data.api.ApiService
-import com.mosin.dictionary.model.data.api.BaseInterceptor
+import com.mosin.model.dto.SearchResultDto
+import com.mosin.repository.api.ApiService
+import com.mosin.repository.api.BaseInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitImplementation : DataSource<List<DataModel>> {
+class RetrofitImplementation : DataSource<List<SearchResultDto>> {
 
-    override suspend fun getData(word: String): List<DataModel> {
+    override suspend fun getData(word: String): List<SearchResultDto> {
         return getService(BaseInterceptor.interceptor).searchAsync(word).await()
     }
 
