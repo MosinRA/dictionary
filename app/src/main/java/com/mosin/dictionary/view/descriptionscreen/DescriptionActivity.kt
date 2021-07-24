@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -14,10 +15,8 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.mosin.dictionary.R
-import com.mosin.dictionary.utils.network.isOnline
+import com.mosin.utils.network.OnlineLiveData
 import com.mosin.utils.ui.AlertDialogFragment
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_description.*
 
 
@@ -28,7 +27,7 @@ class DescriptionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_description)
 
         setActionbarHomeButtonAsUp()
-        description_screen_swipe_refresh_layout.setOnRefreshListener{ startLoadingOrShowError() }
+        description_screen_swipe_refresh_layout.setOnRefreshListener { startLoadingOrShowError() }
         setData()
     }
 
@@ -55,45 +54,33 @@ class DescriptionActivity : AppCompatActivity() {
         if (imageLink.isNullOrBlank()) {
             stopRefreshAnimationIfNeeded()
         } else {
-            //usePicassoToLoadPhoto(findViewById(R.id.description_imageview), imageLink)
             useGlideToLoadPhoto(findViewById(R.id.description_imageview), imageLink)
         }
     }
 
     private fun startLoadingOrShowError() {
-        if (isOnline(applicationContext)) {
-            setData()
-        } else {
-            AlertDialogFragment.newInstance(
-                getString(R.string.dialog_title_device_is_offline),
-                getString(R.string.dialog_message_device_is_offline)
-            ).show(
-                supportFragmentManager,
-                DIALOG_FRAGMENT_TAG
-            )
-            stopRefreshAnimationIfNeeded()
-        }
+        OnlineLiveData(this).observe(
+            this@DescriptionActivity,
+            Observer<Boolean> {
+                if (it) {
+                    setData()
+                } else {
+                    AlertDialogFragment.newInstance(
+                        getString(R.string.dialog_title_device_is_offline),
+                        getString(R.string.dialog_message_device_is_offline)
+                    ).show(
+                        supportFragmentManager,
+                        DIALOG_FRAGMENT_TAG
+                    )
+                    stopRefreshAnimationIfNeeded()
+                }
+            })
     }
 
     private fun stopRefreshAnimationIfNeeded() {
         if (description_screen_swipe_refresh_layout.isRefreshing) {
             description_screen_swipe_refresh_layout.isRefreshing = false
         }
-    }
-
-    private fun usePicassoToLoadPhoto(imageView: ImageView, imageLink: String) {
-        Picasso.with(applicationContext).load("https:$imageLink")
-            .placeholder(R.drawable.ic_no_photo_vector).fit().centerCrop()
-            .into(imageView, object : Callback {
-                override fun onSuccess() {
-                    stopRefreshAnimationIfNeeded()
-                }
-
-                override fun onError() {
-                    stopRefreshAnimationIfNeeded()
-                    imageView.setImageResource(R.drawable.ic_load_error_vector)
-                }
-            })
     }
 
     private fun useGlideToLoadPhoto(imageView: ImageView, imageLink: String) {

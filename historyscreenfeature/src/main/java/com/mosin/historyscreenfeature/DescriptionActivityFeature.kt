@@ -65,6 +65,21 @@ class DescriptionActivityFeature : AppCompatActivity() {
         }
     }
 
+    private fun usePicassoToLoadPhoto(imageView: ImageView, imageLink: String) {
+        Picasso.with(applicationContext).load("https:$imageLink")
+            .placeholder(android.R.drawable.btn_default).fit().centerCrop()
+            .into(imageView, object : Callback {
+                override fun onSuccess() {
+                    stopRefreshAnimationIfNeeded()
+                }
+
+                override fun onError() {
+                    stopRefreshAnimationIfNeeded()
+                    imageView.setImageResource(android.R.drawable.btn_default)
+                }
+            })
+    }
+
     private fun useGlideToLoadPhoto(imageView: ImageView, imageLink: String) {
         Glide.with(imageView)
             .load("https:$imageLink")

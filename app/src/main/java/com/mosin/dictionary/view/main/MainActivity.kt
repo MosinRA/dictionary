@@ -7,6 +7,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -21,14 +23,13 @@ import com.mosin.dictionary.R
 import com.mosin.dictionary.di.injectDependencies
 import com.mosin.dictionary.model.data.AppState
 import com.mosin.dictionary.model.data.DataModel
-import com.mosin.dictionary.utils.convertMeaningsToString
-import com.mosin.dictionary.utils.network.isOnline
+import com.mosin.dictionary.utils.convertMeaningsToSingleString
 import com.mosin.dictionary.view.base.BaseActivity
 import com.mosin.dictionary.view.descriptionscreen.DescriptionActivity
 import com.mosin.dictionary.view.main.adapter.MainAdapter
+import com.mosin.utils.ui.viewById
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.viewmodel.ext.android.viewModel
-
+import org.koin.android.scope.currentScope
 
 
 private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG = "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
@@ -38,7 +39,12 @@ private const val REQUEST_CODE = 42
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
+    override val layoutRes = R.layout.activity_main
     override lateinit var model: MainViewModel
+
+    private val mainActivityRecyclerView by viewById<RecyclerView>(R.id.main_activity_recyclerview)
+    private val searchFAB by viewById<FloatingActionButton>(R.id.search_fab)
+
     private lateinit var splitInstallManager: SplitInstallManager
     private lateinit var appUpdateManager: AppUpdateManager
 
@@ -55,9 +61,9 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
                 startActivity(
                     DescriptionActivity.getIntent(
                         this@MainActivity,
-                        data.text!!,
-                        convertMeaningsToString(data.meanings!!),
-                        data.meanings!![0].imageUrl
+                        data.text,
+                        convertMeaningsToSingleString(data.meanings),
+                        data.meanings[0].imageUrl
                     )
                 )
             }
@@ -65,7 +71,6 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private val onSearchClickListener: SearchDialogFragment.OnSearchClickListener =
         object : SearchDialogFragment.OnSearchClickListener {
             override fun onClick(searchWord: String) {
-                isNetworkAvailable = isOnline(applicationContext)
                 if (isNetworkAvailable) {
                     model.getData(searchWord, isNetworkAvailable)
                 } else {
@@ -84,7 +89,6 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         iniViewModel()
         initViews()
         checkForUpdates()
@@ -154,7 +158,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
                     .addOnFailureListener {
                         Toast.makeText(
                             applicationContext,
-                            "Не удается установить фитчу: " + it.message,
+                            "Couldn't download feature: " + it.message,
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -184,7 +188,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private fun popupSnackbarForCompleteUpdate() {
         Snackbar.make(
             findViewById(R.id.activity_main_layout),
-            "An update has just been downloaded.",
+            getString(R.string.snackbar_update_downloaded_notification),
             Snackbar.LENGTH_INDEFINITE
         ).apply {
             setAction("RESTART") { appUpdateManager.completeUpdate() }
@@ -193,15 +197,15 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     }
 
     private fun iniViewModel() {
-        check(main_activity_recyclerview.adapter == null) { "The ViewModel should be initialised first" }
+        check(mainActivityRecyclerView.adapter == null) { "The ViewModel should be initialised first" }
         injectDependencies()
-        val viewModel: MainViewModel by viewModel()
+        val viewModel: MainViewModel by currentScope.inject()
         model = viewModel
         model.subscribe().observe(this@MainActivity, Observer<AppState> { renderData(it) })
     }
 
     private fun initViews() {
-        search_fab.setOnClickListener(fabClickListener)
-        main_activity_recyclerview.adapter = adapter
+        searchFAB.setOnClickListener(fabClickListener)
+        mainActivityRecyclerView.adapter = adapter
     }
 }

@@ -10,7 +10,6 @@ import androidx.room.PrimaryKey
 class HistoryEntity(
     @PrimaryKey
     @ColumnInfo(name = "word")
-    var word: String,
-    @ColumnInfo(name = "description")
+    var word: String, @ColumnInfo(name = "description")
     var description: String?
 )
