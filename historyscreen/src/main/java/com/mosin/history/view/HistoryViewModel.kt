@@ -1,4 +1,4 @@
-package com.mosin.history.view.history
+package com.mosin.history.view
 
 import androidx.lifecycle.LiveData
 import com.mosin.dictionary.model.data.AppState

@@ -1,4 +1,4 @@
-package com.mosin.dictionary.utils.ui
+package com.mosin.utils.ui
 
 import android.content.Context
 import androidx.appcompat.app.AlertDialog

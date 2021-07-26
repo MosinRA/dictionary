@@ -1,12 +1,12 @@
-package com.mosin.history.view.history
+package com.mosin.history.view
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
-import com.mosin.dictionary.di.injectDependencies
 import com.mosin.dictionary.model.data.AppState
 import com.mosin.dictionary.model.data.DataModel
 import com.mosin.dictionary.view.base.BaseActivity
 import com.mosin.history.R
+import com.mosin.history.injectDependencies
 import kotlinx.android.synthetic.main.activity_history.*
 import org.koin.android.scope.currentScope
 

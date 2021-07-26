@@ -1,8 +1,8 @@
 package com.mosin.history
 
-import com.mosin.history.view.history.HistoryActivity
-import com.mosin.history.view.history.HistoryInteractor
-import com.mosin.history.view.history.HistoryViewModel
+import com.mosin.history.view.HistoryActivity
+import com.mosin.history.view.HistoryInteractor
+import com.mosin.history.view.HistoryViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.qualifier.named

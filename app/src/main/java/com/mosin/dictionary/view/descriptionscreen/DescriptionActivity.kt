@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -65,9 +66,13 @@ class DescriptionActivity : AppCompatActivity() {
                 if (it) {
                     setData()
                 } else {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                        startActivityForResult(Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY), 42)
+                    }
                     AlertDialogFragment.newInstance(
                         getString(R.string.dialog_title_device_is_offline),
                         getString(R.string.dialog_message_device_is_offline)
+
                     ).show(
                         supportFragmentManager,
                         DIALOG_FRAGMENT_TAG

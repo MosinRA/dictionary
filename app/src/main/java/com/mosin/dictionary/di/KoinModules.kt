@@ -24,7 +24,7 @@ private val loadModules by lazy {
 }
 
 val application = module {
-    single { Room.databaseBuilder(get(), HistoryDataBase::class.java, "HistoryDB").build() }
+    single { Room.databaseBuilder(get(), HistoryDataBase::class.java, "HistoryDB1").build() }
     single { get<HistoryDataBase>().historyDao() }
     single<Repository<List<SearchResultDto>>> { RepositoryImplementation(RetrofitImplementation()) }
     single<RepositoryLocal<List<SearchResultDto>>> {
