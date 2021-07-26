@@ -13,7 +13,7 @@
 
     <application>
         <activity
-            android:name=".view.history.HistoryActivity"
+            android:name=".view.HistoryActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

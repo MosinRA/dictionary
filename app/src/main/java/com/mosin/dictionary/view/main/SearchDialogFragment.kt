@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.mosin.dictionary.R
-import com.mosin.dictionary.utils.getEmptyString
+import com.mosin.utils.getEmptyString
 import kotlinx.android.synthetic.main.search_dialog_fragment.*
 
 class SearchDialogFragment : BottomSheetDialogFragment() {

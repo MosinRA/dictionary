@@ -1,4 +1,4 @@
-package com.mosin.history.view.history
+package com.mosin.history.view
 
 import android.view.LayoutInflater
 import android.view.View

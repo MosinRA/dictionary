@@ -1,3 +1,3 @@
-package com.mosin.dictionary.utils
+package com.mosin.utils
 
 fun String.Companion.getEmptyString(): String = ""

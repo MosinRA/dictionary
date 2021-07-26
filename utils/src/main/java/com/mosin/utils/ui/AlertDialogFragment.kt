@@ -4,9 +4,6 @@ package com.mosin.utils.ui
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDialogFragment
-import com.mosin.dictionary.utils.ui.getAlertDialog
-import com.mosin.dictionary.utils.ui.getStubAlertDialog
-
 
 
 class AlertDialogFragment : AppCompatDialogFragment() {
